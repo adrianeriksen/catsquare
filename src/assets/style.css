@@ -1,14 +1,15 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.3;
     background-color: #f1f5f9;
     margin: 0;
 }
 
 a {
-    color: #075985;
+    color: oklch(50% 0.134 242.749);
 
     &:hover {
-        color: #0c4a6e;
+        color: oklch(39.1% 0.09 240.876);
     }
 }
 
@@ -128,22 +129,20 @@ ul.paginator {
     padding: 8px 12px;
 }
 
-ul.comments {
-    list-style-type: none;
-    padding-left: 0;
+.comment-form {
+    input[type="text"] {
+        width: 100%;
+    }
 
-    li {
-        border-top: 1px solid #ccc;
-        margin-left: 0;
-        padding: 8px 0;
+    button {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 
-.comment-form {
-    textarea {
-        width: 100%;
-        height: 3rem;
-    }
+.comment-input-wrapper {
+    display: flex;
+    column-gap: 10px;
 }
 
 form {
@@ -168,4 +167,69 @@ form {
     color: oklch(39.3% 0.095 152.535);
     border-bottom: 1px solid oklch(92.5% 0.084 155.995);
     padding: 0.8rem 2rem;
+}
+
+.timestamp {
+    font-size: 90%;
+    color: oklch(44.6% 0.043 257.281);
+}
+
+.cat-detail {
+    background-color: #ffffff;
+
+    a {
+        text-decoration: none;
+    }
+
+    aside {
+        display: flex;
+        column-gap: 10px;
+        padding: 15px 20px;
+    }
+
+    main > img {
+        display: block;
+    }
+}
+
+.avatar-container {
+    width: 40px;
+
+    > img {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+    }
+}
+
+.content-container {
+    flex: 1;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0.2rem;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.comments {
+    padding: 15px 20px;
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    li {
+        display: flex;
+        column-gap: 15px;
+        margin-bottom: 20px;
+        margin-left: 0;
+        padding: 0;
+    }
 }
