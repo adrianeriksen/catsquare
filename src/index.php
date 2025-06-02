@@ -13,9 +13,8 @@ if (!$page)
 $number_of_cats = get_number_of_cats_for_index($db, $context["authentication"]["user"]["id"]);
 
 if ($number_of_cats > 0) {
-    if ($page > ceil($number_of_cats / CATS_PER_PAGE)) {
+    if ($page > ceil($number_of_cats / CATS_PER_PAGE))
         render_simple_response(404, "Page not found");
-    }
 
     $variables["cats"] = list_cats_for_index($db, $page, $context["authentication"]["user"]["id"]);
     $variables["paginator"] = generate_paginator($page, $number_of_cats, CATS_PER_PAGE, get_index_path());
