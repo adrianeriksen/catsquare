@@ -12,11 +12,16 @@ if (!$page)
 
 $number_of_cats = get_number_of_cats($db);
 
-if ($page > ceil($number_of_cats / CATS_PER_PAGE)) {
-    render_simple_response(404, "Page not found");
+if ($number_of_cats > 0) {
+    if ($page > ceil($number_of_cats / CATS_PER_PAGE))
+        render_simple_response(404, "Page not found");
+
+    $variables["cats"] = list_cats($db, $page);
+    $variables["paginator"] = generate_paginator($page, $number_of_cats, CATS_PER_PAGE, get_discover_path());
+} else {
+    $variables["cats"] = [];
+    $variables["paginator"] = null;
 }
 
-$variables["cats"] = list_cats($db, $page);
-$variables["paginator"] = generate_paginator($page, $number_of_cats, CATS_PER_PAGE, get_discover_path());
 
 render("list_cats.php", $variables, $context);
