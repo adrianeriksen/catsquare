@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         verify_credentials($db, $username, $form_value_current_password)
     ) {
         update_password_for_user($db, $user_id, $form_value_new_password);
+        set_notice("Password successfully updated. Please login again.");
         header("Location: /login.php");
         exit();
     }

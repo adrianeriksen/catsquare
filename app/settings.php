@@ -27,8 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $input_tagline = "";
     }
 
-    if (!$errors)
+    if (!$errors) {
         update_user($db, $context["authentication"]["user"]["id"], $input_tagline, $input_webpage);
+        set_notice("Profile successfully updated.");
+        header("Location: /settings.php", 302);
+        exit();
+    }
 
     $profile = [
         "tagline" => $input_tagline,
