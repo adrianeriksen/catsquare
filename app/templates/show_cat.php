@@ -4,7 +4,7 @@
             <img src="/assets/avatar.png">
         </div>
         <div>
-            <strong><a href="<?= get_permalink_to_user($author["username"]) ?>"><?= $author["username"] ?></a></strong>
+            <strong><a href="<?= get_user_path($author["username"]) ?>"><?= $author["username"] ?></a></strong>
             <?php if ($is_viewing_another_user): ?>
                 <?php if ($is_following_author): ?>
                 – <a href="<?= get_relations_path("unfollow", $author["username"]) ?>">Unfollow</a>
@@ -32,7 +32,7 @@
                 <div class="content-container">
                     <p>
                         <strong>
-                            <a href="<?= get_permalink_to_user($comment["username"]) ?>"><?= $comment["username"] ?></a>
+                            <a href="<?= get_user_path($comment["username"]) ?>"><?= $comment["username"] ?></a>
                         </strong>
                         <?= $comment["comment"] ?><br>
                     </p>

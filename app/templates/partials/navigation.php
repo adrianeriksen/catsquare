@@ -2,7 +2,7 @@
     <li><a href="upload.php">Upload</a></li>
     <li><a href="discover.php">Discover</a></li>
     <li>
-        <a href="<?= get_permalink_to_user($context["authentication"]["user"]["username"]) ?>">
+        <a href="<?= get_user_path($context["authentication"]["user"]["username"]) ?>">
             Logged in as <?= $context["authentication"]["user"]["username"] ?>
         </a>
     </li>

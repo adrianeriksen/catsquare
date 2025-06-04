@@ -42,10 +42,6 @@ $context["authentication"] = get_authentication_context_object($db);
 
 require_once "includes/paths.php";
 
-function get_permalink_to_user($username) {
-    return "/user.php?username=$username";
-}
-
 if (ENDPOINT_REQUIRES_AUTHENTICATION && !$context["authentication"]["is_authenticated"]) {
     header("Location: /login.php");
     exit();
