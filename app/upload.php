@@ -7,7 +7,7 @@ include "includes/bootstrap.php";
 $variables = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $caption_value = htmlspecialchars($_POST["caption"]);
+    $caption_value = $_POST["caption"];
     $file_content_type = $_FILES["image"]["type"];
 
     if ($file_content_type == "image/jpeg") {

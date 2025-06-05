@@ -24,24 +24,7 @@
 
     <section class="comments">
         <ul>
-            <?php foreach ($comments as $comment): ?>
-            <li>
-                <div class="avatar-container">
-                    <img src="/assets/avatar.png">
-                </div>
-                <div class="content-container">
-                    <p>
-                        <strong>
-                            <a href="<?= get_user_path($comment["username"]) ?>"><?= $comment["username"] ?></a>
-                        </strong>
-                        <?= $comment["comment"] ?><br>
-                    </p>
-                    <p>
-                        <span class="timestamp">On <?= date("Y-m-d H:i", strtotime($comment["created_at"])) ?></span>
-                    </p>
-                </div>
-            </li>
-            <?php endforeach; ?>
+            <?php foreach ($comments as $comment) require "templates/partials/comment.php" ?>
         </ul>
 
         <?php if ($context["authentication"]["is_authenticated"]): ?>

@@ -1,4 +1,13 @@
 <?php
+function to_comment_entry($row) {
+    return [
+        "id" => $row["id"],
+        "comment" => $row["comment"],
+        "username" => $row["username"],
+        "created_at" => $row["created_at"],
+    ];
+}
+
 function create_comment($db, $comment) {
     $query = <<<QUERY
 INSERT INTO comments (comment, cat_id, created_by)
@@ -27,12 +36,7 @@ QUERY;
     $comments = [];
 
     while ($row = $result->fetchArray(SQLITE3_ASSOC))
-        $comments[] = [
-            "id" => $row["id"],
-            "comment" => htmlspecialchars($row["comment"]),
-            "username" => $row["username"],
-            "created_at" => $row["created_at"],
-        ];
+        $comments[] = to_comment_entry($row);
 
     return $comments;
 }
