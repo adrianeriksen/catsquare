@@ -12,6 +12,8 @@ if (!defined("ENDPOINT_REQUIRES_AUTHENTICATION"))
 if (!defined("PAGE_LAYOUT"))
     define("PAGE_LAYOUT", "default.php");
 
+require_once "config.php";
+
 function render($template, $variables = [], $context = []) {
     extract($variables);
 
@@ -26,6 +28,12 @@ function render_simple_response($code, $message) {
     http_response_code($code);
     echo "<pre>" . $code . ": " . $message . "</pre>";
     exit(1);
+}
+
+try {
+    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
+} catch (Exception $e) {
+    render_simple_response(500, "Internal server error");
 }
 
 require_once "includes/services/authentication_service.php";

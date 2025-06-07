@@ -1,33 +1,37 @@
-CREATE TABLE IF NOT EXISTS 'users' (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    `username` TEXT NOT NULL,
-    `hashed_password` TEXT,
-    `is_active` INTEGER DEFAULT 0,
-    `tagline` TEXT DEFAULT '',
-    `webpage` TEXT DEFAULT ''
+CREATE TABLE IF NOT EXISTS users (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(20) UNIQUE NOT NULL,
+    hashed_password VARCHAR(200) NOT NULL,
+    is_active TINYINT DEFAULT 0,
+    tagline VARCHAR(200) DEFAULT '',
+    webpage VARCHAR(200) DEFAULT '',
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS 'cats' (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    `image_path` TEXT NOT NULL,
-    `created_by` INTEGER NOT NULL,
-    `created_at` TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(`created_by`) REFERENCES users(`id`)
+CREATE TABLE IF NOT EXISTS cats (
+    id INT NOT NULL AUTO_INCREMENT,
+    image_filename VARCHAR(64) NOT NULL,
+    created_by INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS 'comments' (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    `comment` TEXT NOT NULL,
-    `cat_id` INTEGER NOT NULL,
-    `created_by` INTEGER NOT NULL,
-    `created_at` TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(`cat_id`) REFERENCES cats(`id`),
-    FOREIGN KEY(`created_by`) REFERENCES users(`id`)
+CREATE TABLE IF NOT EXISTS comments (
+    id INT NOT NULL AUTO_INCREMENT,
+    comment VARCHAR(300) NOT NULL,
+    cat_id INT NOT NULL,
+    created_by INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (cat_id) REFERENCES cats(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS 'relations' (
-    `follower_id` INTEGER NOT NULL,
-    `following_id` INTEGER NOT NULL,
-    FOREIGN KEY(`follower_id`) REFERENCES users(`id`),
-    FOREIGN KEY(`following_id`) REFERENCES users(`id`)
+CREATE TABLE IF NOT EXISTS relations (
+    follower_id INT NOT NULL,
+    followee_id INT NOT NULL,
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id),
+    UNIQUE (follower_id, followee_id)
 );
