@@ -9,13 +9,11 @@ function to_user_entry($row) {
     ];
 }
 
-function get_user($db, $id) {
-    $query = "SELECT * FROM users WHERE id = :id";
+function get_user($conn, $id) {
+    $query = "SELECT * FROM users WHERE id = ?";
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(":id", $id);
-    $result = $stmt->execute();
-    $row = $result->fetchArray();
+    $result = mysqli_execute_query($conn, $query, [$id]);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
     if (!$row)
         return null;
@@ -23,13 +21,11 @@ function get_user($db, $id) {
     return to_user_entry($row);
 }
 
-function get_user_by_username($db, $username) {
-    $query = "SELECT * FROM users WHERE username = :username";
+function get_user_by_username($conn, $username) {
+    $query = "SELECT * FROM users WHERE username = ?";
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(":username", $username);
-    $result = $stmt->execute();
-    $row = $result->fetchArray();
+    $result = mysqli_execute_query($conn, $query, [$username]);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
     if (!$row)
         return null;
@@ -37,44 +33,34 @@ function get_user_by_username($db, $username) {
     return to_user_entry($row);
 }
 
-function create_user($db, $username, $password) {
+function create_user($conn, $username, $password) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     $query = <<<QUERY
 INSERT INTO users (username, hashed_password)
-VALUES (:username, :hashed_password)
+VALUES (?, ?)
 QUERY;
 
-    $statement = $db->prepare($query);
-    $statement->bindValue(":username", $username);
-    $statement->bindValue(":hashed_password", $hashed_password);
-
-    $statement->execute();
+    $params = [$username, $hashed_password];
+    mysqli_execute_query($conn, $query, $params);
 }
 
-function update_user($db, $user_id, $tagline, $webpage) {
+function update_user($conn, $id, $tagline, $webpage) {
     $query = <<<QUERY
 UPDATE users
-SET tagline = :tagline, webpage = :webpage
-WHERE id = :user_id
+SET tagline = ?, webpage = ?
+WHERE id = ?
 QUERY;
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(":tagline", $tagline);
-    $stmt->bindValue(":webpage", $webpage);
-    $stmt->bindValue(":user_id", $user_id);
-
-    $result = $stmt->execute();
+    $params = [$tagline, $webpage, $id];
+    mysqli_execute_query($conn, $query, $params);
 }
 
-function update_password_for_user($db, $id, $password) {
+function update_password_for_user($conn, $id, $password) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "UPDATE users SET hashed_password = :hashed_password WHERE id = :id";
+    $query = "UPDATE users SET hashed_password = ? WHERE id = ?";
 
-    $statement = $db->prepare($query);
-    $statement->bindValue(":hashed_password", $hashed_password);
-    $statement->bindValue("id", $id);
-
-    $statement->execute();
+    $params = [$hashed_password, $id];
+    mysqli_execute_query($conn, $query, $params);
 }

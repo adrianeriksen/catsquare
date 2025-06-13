@@ -8,34 +8,29 @@ function to_comment_entry($row) {
     ];
 }
 
-function create_comment($db, $comment) {
+function create_comment($conn, $comment) {
     $query = <<<QUERY
 INSERT INTO comments (comment, cat_id, created_by)
-VALUES (:comment, :cat_id, :created_by)
+VALUES (?, ?, ?)
 QUERY;
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(":comment", $comment["comment"]);
-    $stmt->bindValue(":cat_id", $comment["cat_id"]);
-    $stmt->bindValue(":created_by", $comment["user_id"]);
-    $stmt->execute();
+    $params = [$comment["comment"], $comment["cat_id"], $comment["user_id"]];
+    mysqli_execute_query($conn, $query, $params);
 }
 
-function get_comments_for_cat($db, $cat_id) {
+function get_comments_for_cat($conn, $cat_id) {
     $query = <<<QUERY
 SELECT comments.id AS id, comments.comment AS comment, users.username AS username, comments.created_at AS created_at
 FROM comments
 LEFT JOIN users ON comments.created_by = users.id
-WHERE comments.cat_id = :cat_id;
+WHERE comments.cat_id = ?
 QUERY;
 
-    $stmt = $db->prepare($query);
-    $stmt->bindValue(":cat_id", $cat_id);
-    $result = $stmt->execute();
+    $result = mysqli_execute_query($conn, $query, [$cat_id]);
 
     $comments = [];
 
-    while ($row = $result->fetchArray(SQLITE3_ASSOC))
+    while ($row = mysqli_fetch_assoc($result))
         $comments[] = to_comment_entry($row);
 
     return $comments;

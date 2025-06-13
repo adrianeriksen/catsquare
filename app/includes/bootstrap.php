@@ -4,8 +4,6 @@ session_start();
 define("DATABASE_PATH", "database.sqlite");
 define("CATS_PER_PAGE", 3);
 
-$db = new SQLite3(DATABASE_PATH);
-
 if (!defined("ENDPOINT_REQUIRES_AUTHENTICATION"))
     define("ENDPOINT_REQUIRES_AUTHENTICATION", true);
 
@@ -31,7 +29,7 @@ function render_simple_response($code, $message) {
 }
 
 try {
-    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $db = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 } catch (Exception $e) {
     render_simple_response(500, "Internal server error");
 }

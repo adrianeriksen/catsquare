@@ -1,17 +1,12 @@
 <?php
-function verify_credentials($db, $username, $password)
-{
-    $query = "SELECT hashed_password FROM users WHERE username = :username";
+function verify_credentials($conn, $username, $password) {
+    $query = "SELECT hashed_password FROM users WHERE username = ?";
 
-    $statement = $db->prepare($query);
-    $statement->bindValue(":username", $username);
-    $result = $statement->execute();
-    $row = $result->fetchArray();
+    $result = mysqli_execute_query($conn, $query, [$username]);
+    $row = mysqli_fetch_assoc($result);
 
     if (!$row)
         return false;
 
-    $hash = $row["hashed_password"];
-
-    return password_verify($password, $hash);
+    return password_verify($password, $row["hashed_password"]);
 }
