@@ -55,7 +55,7 @@ WHERE created_by IN (
     SELECT followee_id FROM relations
     WHERE follower_id = ?)
 ORDER BY created_at DESC
-LIMIT :limit OFFSET :offset
+LIMIT ? OFFSET ?
 QUERY;
 
     $offset = CATS_PER_PAGE * ($page - 1);
