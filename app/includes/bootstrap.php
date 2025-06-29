@@ -35,6 +35,7 @@ try {
 }
 
 require_once "includes/services/authentication_service.php";
+require_once "includes/services/avatar_service.php";
 require_once "includes/services/cat_service.php";
 require_once "includes/services/comment_service.php";
 require_once "includes/services/relations_service.php";

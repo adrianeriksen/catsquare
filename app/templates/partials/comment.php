@@ -1,6 +1,6 @@
 <li>
     <div class="avatar-container">
-        <img src="/assets/avatar.png">
+        <?= get_avatar_tag($comment["username"], "sm") ?>
     </div>
     <div class="content-container">
         <p>

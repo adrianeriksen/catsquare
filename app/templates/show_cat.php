@@ -1,7 +1,7 @@
 <article class="cat-detail">
     <aside>
         <div class="avatar-container">
-            <img src="/assets/avatar.png">
+            <?= get_avatar_tag($author["username"], "sm") ?>
         </div>
         <div>
             <strong><a href="<?= get_user_path($author["username"]) ?>"><?= $author["username"] ?></a></strong>

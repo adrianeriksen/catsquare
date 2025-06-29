@@ -233,3 +233,37 @@ form {
         padding: 0;
     }
 }
+
+.avatar {
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 300;
+    display: flex;
+}
+
+.avatar-color-1 {
+    color: #ffffff;
+    background-color: #0069a8;
+}
+
+.avatar-color-2 {
+    color: #ffffff;
+    background-color: #007a55;
+}
+
+.avatar-color-3 {
+    color: #ffffff;
+    background-color: #c5005c;
+}
+
+.avatar-color-2 {
+    color: #ffffff;
+    background-color: #fd9a00;
+}
