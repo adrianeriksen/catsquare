@@ -1,4 +1,2 @@
-.DS_STORE
-app/database.sqlite
 app/config.php
 app/uploads/*.webp

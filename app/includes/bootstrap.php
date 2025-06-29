@@ -28,6 +28,9 @@ function render_simple_response($code, $message) {
     exit(1);
 }
 
+// Security headers
+header("Content-Security-Policy: default-src 'self'; child-src 'none'; connect-src 'none'; font-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'none'");
+
 try {
     $db = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 } catch (Exception $e) {
