@@ -6,10 +6,10 @@ body {
 }
 
 a {
-    color: oklch(50% 0.134 242.749);
+    color: #0069a8;
 
     &:hover {
-        color: oklch(39.1% 0.09 240.876);
+        color: #024a70;
     }
 }
 
@@ -163,15 +163,15 @@ form {
 }
 
 .success-notice {
-    background-color: oklch(96.2% 0.044 156.743);
-    color: oklch(39.3% 0.095 152.535);
-    border-bottom: 1px solid oklch(92.5% 0.084 155.995);
+    background-color: #dcfce7;
+    color: #0d642b;
+    border-bottom: 1px solid #b9f8cf;
     padding: 0.8rem 2rem;
 }
 
 .timestamp {
     font-size: 90%;
-    color: oklch(44.6% 0.043 257.281);
+    color: #45556c;
 }
 
 .cat-detail {
