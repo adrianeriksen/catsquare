@@ -31,10 +31,7 @@ function render_simple_response($code, $message) {
 
 // Security headers
 header("Content-Security-Policy: default-src 'self'; child-src 'none'; connect-src 'none'; font-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; script-src 'none'");
-header("Permissions-Policy: camera=(), getolocation=(), microphone=(), payment=()");
-header("Referrer-Policy: same-origin");
-header("X-Frame-Options: DENY");
-header("X-Content-Type-Options: nosniff");
+header("Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=()");
 
 try {
     $db = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
