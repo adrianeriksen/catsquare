@@ -9,8 +9,9 @@
             </strong>
             <?= htmlspecialchars($comment["comment"]) ?>
         </p>
-        <p>
-            <span class="timestamp">On <?= date("Y-m-d H:i", strtotime($comment["created_at"])) ?></span>
+        <p class="timestamp">
+            On <?= date("Y-m-d H:i", strtotime($comment["created_at"])) ?>
+           <?php if (can_manage_comment($context["authentication"]["user"]["id"], $cat["created_by"], $comment["created_by"])): ?> - <a href="<?= get_cat_delete_comment_path($cat["id"], $comment["id"]) ?>">Delete</a><?php endif; ?>
         </p>
     </div>
 </li>
