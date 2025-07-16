@@ -18,9 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $image = imagecreatefrompng($_FILES["image"]["tmp_name"]);
     }
 
-    if (!isset($image) || !$image) {
+    if (!isset($image) || !$image)
         render_simple_response(400, "Bad request");
-    }
 
     $side = min(imagesx($image), imagesy($image));
 
@@ -31,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     imagewebp($image, "uploads/" . $final_filename);
 
-    $cat_id = create_cat($db, $caption_value, $final_filename, $context["authentication"]["user"]["id"]);
+    $cat_id = create_cat($conn, $caption_value, $final_filename, $context["authentication"]["user"]["id"]);
 
     set_notice("Cat image successfully uploaded.");
     header("Location: /cat.php?id=$cat_id");

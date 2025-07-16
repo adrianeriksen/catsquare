@@ -11,11 +11,8 @@ function get_profile_fields($context) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
 
-    if ($_POST["webpage"]) {
-        $input_webpage = filter_input(INPUT_POST, "webpage", FILTER_VALIDATE_URL);
-    } else {
-        $input_webpage = "";
-    }
+    $input_webpage = isset($_POST["webpage"]) ?
+        filter_input(INPUT_POST, "webpage", FILTER_VALIDATE_URL) : "";
 
     if ($_POST["tagline"]) {
         $input_tagline = filter_input(INPUT_POST, "tagline", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -28,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!$errors) {
-        update_user($db, $context["authentication"]["user"]["id"], $input_tagline, $input_webpage);
+        update_user($conn, $context["authentication"]["user"]["id"], $input_tagline, $input_webpage);
         set_notice("Profile successfully updated.");
         header("Location: /settings.php", 302);
         exit();

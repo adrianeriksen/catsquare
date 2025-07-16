@@ -34,7 +34,7 @@ header("Content-Security-Policy: default-src 'self'; child-src 'none'; connect-s
 header("Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=()");
 
 try {
-    $db = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_NAME);
 } catch (Exception $e) {
     render_simple_response(500, "Internal server error");
 }
@@ -50,7 +50,7 @@ require_once "includes/notice.php";
 require_once "includes/authentication.php";
 
 $context["notice"] = get_notice_context_object();
-$context["authentication"] = get_authentication_context_object($db);
+$context["authentication"] = get_authentication_context_object($conn);
 
 require_once "includes/paths.php";
 

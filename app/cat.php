@@ -15,7 +15,7 @@ $cat_id = $_GET["id"] ?? 0;
 if ($cat_id <= 0)
     render_simple_response(400, "Bad request");
 
-$cat = get_cat($db, $cat_id);
+$cat = get_cat($conn, $cat_id);
 
 if ($cat == null)
     render_simple_response(404, "Page not found");
@@ -36,7 +36,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "comment") {
             "user_id" => $context["authentication"]["user"]["id"],
         ];
 
-        create_comment($db, $comment);
+        create_comment($conn, $comment);
 
         set_notice("Comment successfully published.");
         header("Location: /cat.php?id=" . $cat["id"]);
@@ -53,7 +53,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "delete-comment") {
     if ($comment_id <= 0)
         render_simple_response(400, "Bad request");
 
-    $comment = get_comment($db, $comment_id);
+    $comment = get_comment($conn, $comment_id);
 
     if (!$comment)
         render_simple_response(403, "Forbidden");
@@ -66,7 +66,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "delete-comment") {
     if (!can_manage_comment($current_user_id, $cat_created_by_id, $comment_created_by_id))
         render_simple_response(403, "Forbidden");
 
-    delete_comment($db, $comment_id);
+    delete_comment($conn, $comment_id);
 
     set_notice("Comment successfully deleted.");
     header("Location: /cat.php?id=" . $cat["id"]);
@@ -76,8 +76,8 @@ if (isset($_GET["action"]) && $_GET["action"] == "delete-comment") {
 $author_id = $cat["created_by"];
 
 $variables["cat"] = $cat;
-$variables["author"] = get_user($db, $author_id);
-$variables["comments"] = get_comments_for_cat($db, $cat_id);
+$variables["author"] = get_user($conn, $author_id);
+$variables["comments"] = get_comments_for_cat($conn, $cat_id);
 
 $current_user_id = $context["authentication"]["user"]["id"];
 $is_viewing_another_user = $context["authentication"]["is_authenticated"] && $current_user_id != $author_id;
@@ -85,6 +85,6 @@ $is_viewing_another_user = $context["authentication"]["is_authenticated"] && $cu
 $variables["is_viewing_another_user"] = $is_viewing_another_user;
 
 $variables["is_following_author"] = $is_viewing_another_user ?
-     is_following_relation_present($db, $current_user_id, $author_id) : null;
+     is_following_relation_present($conn, $current_user_id, $author_id) : null;
 
 render("show_cat.php", $variables, $context);

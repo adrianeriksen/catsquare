@@ -5,10 +5,10 @@ define("PAGE_LAYOUT", "unauthenticated.php");
 include "includes/bootstrap.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = verify_credentials($db, $_POST["username"], $_POST["password"]);
+    $login = verify_credentials($conn, $_POST["username"], $_POST["password"]);
 
     if ($login) {
-        $user = get_user_by_username($db, $_POST["username"]);
+        $user = get_user_by_username($conn, $_POST["username"]);
 
         if (!$user['is_active']) {
             set_notice("Your account must be activated by an administrator before you can login!");
