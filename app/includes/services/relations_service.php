@@ -25,7 +25,7 @@ QUERY;
 function delete_following_relation($conn, $follower_id, $followee_id) {
     $query = <<<QUERY
 DELETE FROM relations
-WHERE follower_id = :follower_id AND followee_id = :followee_id
+WHERE follower_id = ? AND followee_id = ?
 QUERY;
 
     $params = [$follower_id, $followee_id];
