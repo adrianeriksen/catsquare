@@ -13,7 +13,10 @@
                 <?php endif; ?>
             <?php endif; ?>
             <br>
-            <span class="timestamp">On <?= date("Y-m-d H:i", strtotime($cat["created_at"])) ?></span>
+            <span class="timestamp">
+                On <?= date("Y-m-d H:i", strtotime($cat["created_at"])) ?>
+                <?php if (can_manage_cat($context["authentication"]["user"]["id"], $cat["created_by"])): ?>– <a href="<?= get_cat_delete_path($cat["id"]) ?>">Delete</a><?php endif; ?>
+            </span>
         </div>
 
     </aside>

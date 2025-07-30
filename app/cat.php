@@ -8,6 +8,10 @@ function can_manage_comment($user_id, $cat_created_by_id, $comment_created_by_id
     return $user_id == $cat_created_by_id || $user_id == $comment_created_by_id;
 }
 
+function can_manage_cat($user_id, $cat_created_by_id) {
+    return $user_id == $cat_created_by_id;
+}
+
 $variables = [];
 
 $cat_id = $_GET["id"] ?? 0;
@@ -42,6 +46,24 @@ if (isset($_GET["action"]) && $_GET["action"] == "comment") {
         header("Location: /cat.php?id=" . $cat["id"]);
         exit();
     }
+}
+
+if (isset($_GET["action"]) && $_GET["action"] == "delete") {
+    if ($_SERVER["REQUEST_METHOD"] != "GET")
+        render_simple_response(405, "Method not allowed");
+
+    $current_user_id = $context["authentication"]["user"]["id"];
+    $cat_created_by_id = $cat["created_by"];
+
+    // Authorization ligic for deletion
+    if (!can_manage_cat($current_user_id, $cat_created_by_id))
+        render_simple_response(403, "Forbidden");
+
+    delete_cat($conn, $cat_id);
+
+    set_notice("Cat successfully deleted.");
+    header("Location: /");
+    exit();
 }
 
 if (isset($_GET["action"]) && $_GET["action"] == "delete-comment") {

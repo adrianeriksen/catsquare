@@ -11,6 +11,10 @@ function get_cat_comment_path($id) {
     return "/cat.php?id=$id&action=comment";
 }
 
+function get_cat_delete_path($id) {
+    return "/cat.php?id=$id&action=delete";
+}
+
 function get_cat_delete_comment_path($cat_id, $comment_id) {
     return "/cat.php?id=$cat_id&action=delete-comment&comment-id=$comment_id";
 }

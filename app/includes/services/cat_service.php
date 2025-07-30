@@ -109,6 +109,11 @@ QUERY;
     return $id;
 }
 
+function delete_cat($conn, $id) {
+    $query = "DELETE FROM cats WHERE id = ?";
+    mysqli_execute_query($conn, $query, [$id]);
+}
+
 function list_cats_by_user_id($conn, $user_id, $page) {
     $query = <<<QUERY
 SELECT * FROM cats
