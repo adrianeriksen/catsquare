@@ -3,9 +3,6 @@ require_once "config.php";
 
 session_start(SESSION_OPTIONS);
 
-define("DATABASE_PATH", "database.sqlite");
-define("CATS_PER_PAGE", 3);
-
 if (!defined("ENDPOINT_REQUIRES_AUTHENTICATION"))
     define("ENDPOINT_REQUIRES_AUTHENTICATION", true);
 

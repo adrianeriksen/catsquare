@@ -1,6 +1,4 @@
 <?php
-const BANNED_PASSWORDS_FILE = "data/banned-passwords.txt";
-
 function is_password_banned($password) {
     if (!file_exists(BANNED_PASSWORDS_FILE))
         return false;

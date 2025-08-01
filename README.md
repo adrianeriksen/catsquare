@@ -14,18 +14,20 @@ A `config.php` file is required before running the application. Replace the dots
 
 ```php
 <?php
-define("DB_HOSTNAME", "...");
-define("DB_USERNAME", "...");
-define("DB_PASSWORD", "...");
-define("DB_NAME", "...");
+const DB_HOSTNAME = "...";
+const DB_USERNAME = "...";
+const DB_PASSWORD = "...";
+const DB_NAME = "...";
 
-define("SESSION_OPTIONS", [
-    "name" => "__Host-SESSID",
+const SESSION_OPTIONS = [
+    "name" => "SESSID",
     "cookie_path" => "/",
-    "cookie_secure" => true,
     "cookie_httponly" => true,
     "cookie_samesite" => "Lax",
-]);
+];
+
+const BANNED_PASSWORDS_FILE = "data/banned-passwords.txt";
+const CATS_PER_PAGE = 3;
 ```
 
 It's highly recommended to create a `.htaccess` file. The contents below will restrict access to files and directories and add essential security headers. It requires HTTPS to be configured.
