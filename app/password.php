@@ -1,35 +1,26 @@
 <?php
-define("PAGE_LAYOUT", "narrow.php");
+const PAGE_LAYOUT = "narrow.php";
 
 require_once "includes/bootstrap.php";
 
 $form_errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $form_value_current_password = $_POST["current_password"];
-    $form_value_new_password = $_POST["new_password"];
-    $form_value_confirm_new_password = $_POST["confirm_new_password"];
+    $form_current_password_value = $_POST["current_password"];
+    $form_new_password_value = $_POST["new_password"];
+    $form_confirm_new_password_value = $_POST["confirm_new_password"];
 
-    if (grapheme_strlen($form_value_new_password) < 8) {
-        $form_errors["new_password"] = "Password must be at least 8 characters";
-    }
-
-    if (grapheme_strlen($form_value_new_password) > 256) {
-        $form_errors["new_password"] = "Password can't exceed 256 characters";
-    }
-
-    if ($form_value_new_password != $form_value_confirm_new_password) {
-        $form_errors["new_password"] = "Passwords doesn't match";
-    }
+    if ($err = validate_password($form_new_password_value, $form_confirm_new_password_value))
+        $form_errors["new_password"] = $err;
 
     $user_id = $context["authentication"]["user"]["id"];
     $username = $context["authentication"]["user"]["username"];
 
-    if (
-        count($form_errors) == 0 &&
-        verify_credentials($conn, $username, $form_value_current_password)
-    ) {
-        update_password_for_user($conn, $user_id, $form_value_new_password);
+    if (!verify_credentials($conn, $username, $form_current_password_value))
+        $form_errors["current_password"] = "Wrong password";
+
+    if (!$form_errors) {
+        update_password_for_user($conn, $user_id, $form_new_password_value);
         set_notice("Password successfully updated. Please login again.");
         header("Location: /login.php");
         exit();

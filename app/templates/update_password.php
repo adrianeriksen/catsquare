@@ -4,6 +4,9 @@
     <form method="post">
         <p>
             <label>Current password</label>
+            <?php if (isset($form_errors["current_password"])): ?>
+            <pre><?= $form_errors["current_password"]; ?></pre>
+            <?php endif; ?>
             <input name="current_password" type="password" value="">
         </p>
         <p>

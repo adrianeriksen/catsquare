@@ -33,6 +33,7 @@ It's highly recommended to create a `.htaccess` file. The contents below will re
 ```
 Options -Indexes
 
+RedirectMatch 403 ^/data(/.*)?$
 RedirectMatch 403 ^/includes(/.*)?$
 RedirectMatch 403 ^/templates(/.*)?$
 RedirectMatch 403 ^/\.
@@ -49,5 +50,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     Header always set X-Content-Type-Options "nosniff"
 </IfModule>
 ```
+
+You can ban certain passwords from being used. This is done by creating the file `data/banned-passwords.txt` where each line is a banned password. A good practice is to add the 1000 most commonly used passwords.
 
 This is PHP at its best — low barrier to entry and mistakes.

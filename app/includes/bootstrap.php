@@ -45,6 +45,7 @@ require_once "includes/services/cat_service.php";
 require_once "includes/services/comment_service.php";
 require_once "includes/services/relations_service.php";
 require_once "includes/services/user_service.php";
+require_once "includes/validators/password_validator.php";
 
 require_once "includes/notice.php";
 require_once "includes/authentication.php";
