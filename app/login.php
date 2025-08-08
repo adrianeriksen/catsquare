@@ -5,7 +5,11 @@ define("PAGE_LAYOUT", "unauthenticated.php");
 include "includes/bootstrap.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = verify_credentials($conn, $_POST["username"], $_POST["password"]);
+    if (is_ip_address_banned($conn, $_SERVER["REMOTE_ADDR"])) {
+        $login = false;
+    } else {
+        $login = verify_credentials($conn, $_POST["username"], $_POST["password"]);
+    }
 
     if ($login) {
         $user = get_user_by_username($conn, $_POST["username"]);
@@ -21,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["authenticated_user"] = $_POST["username"];
         header("Location: /", false, 302);
         exit();
+    } else {
+        log_failed_login_attempt($conn, $_SERVER["REMOTE_ADDR"]);
     }
 }
 

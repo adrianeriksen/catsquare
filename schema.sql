@@ -35,3 +35,8 @@ CREATE TABLE IF NOT EXISTS relations (
     FOREIGN KEY (followee_id) REFERENCES users(id),
     UNIQUE (follower_id, followee_id)
 );
+
+CREATE TABLE IF NOT EXISTS failed_login_attempts (
+    ip_address VARCHAR(64) NOT NULL,
+    attempt_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

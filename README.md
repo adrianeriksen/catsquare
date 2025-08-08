@@ -28,6 +28,7 @@ const SESSION_OPTIONS = [
 
 const BANNED_PASSWORDS_FILE = "data/banned-passwords.txt";
 const CATS_PER_PAGE = 3;
+const ALLOWED_NUMBER_OF_FAILED_LOGIN_ATTEMPTS = 5;
 ```
 
 It's highly recommended to create a `.htaccess` file. The contents below will restrict access to files and directories and add essential security headers. It requires HTTPS to be configured.
